@@ -11,11 +11,12 @@ class UserSchema extends Schema {
         .string("username", 80)
         .notNullable()
         .unique();
-      table
-        .string("email", 254)
-        .notNullable()
-        .unique();
       table.string("password", 60).notNullable();
+      table.string("name", 100).notNullable();
+      table.string("identity_number", 50);
+      table.string("identity_type", 50);
+      table.date("birthday").notNullable();
+      table.string("status", 50);
       table.timestamps();
     });
   }

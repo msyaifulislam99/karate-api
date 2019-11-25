@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
 module.exports = {
   /*
    * When enabled, Bulblebee will automatically parse the ?include=
    * parameter and include all requested resources
    */
-  parseRequest: false,
+  parseRequest: true,
 
   /*
    * Nested includes will be resolved up to this limit any further nested
@@ -25,4 +25,4 @@ module.exports = {
    * resolve the transformer using this namespace as prefix.
    */
   namespace: 'App/Transformers'
-}
+};
