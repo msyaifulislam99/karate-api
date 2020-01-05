@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +17,11 @@
 |     Make sure to pass a relative path from the project root.
 */
 
-const { Ignitor } = require('@adonisjs/ignitor')
+const { Ignitor } = require('@adonisjs/ignitor');
+const Fold = require('@adonisjs/fold');
 
-new Ignitor(require('@adonisjs/fold'))
+new Ignitor(Fold)
   .appRoot(__dirname)
   .fireHttpServer()
-  .catch(console.error)
+  // eslint-disable-next-line no-console
+  .catch(console.error);

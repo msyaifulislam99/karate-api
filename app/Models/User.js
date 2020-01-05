@@ -1,39 +1,45 @@
-'use strict'
+'use strict';
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model')
+const BaseModel = use('App/Models/BaseModel');
+const Constants = use('App/Library/Helpers/Constants');
 
-/** @type {import('@adonisjs/framework/src/Hash')} */
-const Hash = use('Hash')
+class User extends BaseModel {
+  static boot() {
+    super.boot();
 
-class User extends Model {
-  static boot () {
-    super.boot()
+    this.addTrait('@provider:Adonis/Acl/HasRole');
+    this.addTrait('@provider:Adonis/Acl/HasPermission');
 
-    /**
-     * A hook to hash the user password before saving
-     * it to the database.
-     */
-    this.addHook('beforeSave', async (userInstance) => {
-      if (userInstance.dirty.password) {
-        userInstance.password = await Hash.make(userInstance.password)
-      }
-    })
+    this.addTrait('Media');
   }
 
-  /**
-   * A relationship on tokens is required for auth to
-   * work. Since features like `refreshTokens` or
-   * `rememberToken` will be saved inside the
-   * tokens table.
-   *
-   * @method tokens
-   *
-   * @return {Object}
-   */
-  tokens () {
-    return this.hasMany('App/Models/Token')
+  async getImage() {
+    const media = await this.getMedia();
+    return media ? media.getUrl() : null;
+  }
+
+  static get hidden() {
+    return ['password', 'reset_token', 'verification_token'];
+  }
+
+  isActive() {
+    return this.status === Constants.USER_STATUS_ACTIVE;
+  }
+
+  isVerified() {
+    return this.verified_at !== null;
+  }
+
+  getRole(role = 'participant') {
+    // Default Role is Customer
+    const roles = Constants.USER_ROLES;
+    const idx = roles.findIndex(k => k === role);
+    return idx === -1 ? 3 : idx + 1;
+  }
+
+  tokens() {
+    return this.hasMany('App/Models/Token');
   }
 }
 
-module.exports = User
+module.exports = User;

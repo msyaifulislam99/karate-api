@@ -1,4 +1,6 @@
-"use strict";
+'use strict';
+
+const path = require('path');
 
 /*
 |--------------------------------------------------------------------------
@@ -11,15 +13,20 @@
 |
 */
 const providers = [
-  "@adonisjs/framework/providers/AppProvider",
-  "@adonisjs/auth/providers/AuthProvider",
-  "@adonisjs/bodyparser/providers/BodyParserProvider",
-  "@adonisjs/cors/providers/CorsProvider",
-  "@adonisjs/lucid/providers/LucidProvider",
-  "@adonisjs/validator/providers/ValidatorProvider",
-  "@adonisjs/lucid-slugify/providers/SlugifyProvider",
-  "@adonisjs/framework/providers/ViewProvider",
-  "adonis-bumblebee/providers/BumblebeeProvider"
+  '@adonisjs/framework/providers/AppProvider',
+  '@adonisjs/auth/providers/AuthProvider',
+  '@adonisjs/bodyparser/providers/BodyParserProvider',
+  '@adonisjs/cors/providers/CorsProvider',
+  '@adonisjs/lucid/providers/LucidProvider',
+  '@adonisjs/validator/providers/ValidatorProvider',
+  '@adonisjs/lucid-slugify/providers/SlugifyProvider',
+  '@adonisjs/framework/providers/ViewProvider',
+  'adonis-bumblebee/providers/BumblebeeProvider',
+  'adonis-acl/providers/AclProvider',
+  '@adonisjs/ally/providers/AllyProvider',
+
+  // custom providers
+  path.join(__dirname, '..', 'providers/ValidationRulesProvider')
 ];
 
 /*
@@ -31,7 +38,11 @@ const providers = [
 | Providers for migrations, tests etc.
 |
 */
-const aceProviders = ["@adonisjs/lucid/providers/MigrationsProvider"];
+const aceProviders = [
+  '@adonisjs/lucid/providers/MigrationsProvider',
+  'adonis-bumblebee/providers/CommandsProvider',
+  'adonis-acl/providers/CommandsProvider'
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +56,10 @@ const aceProviders = ["@adonisjs/lucid/providers/MigrationsProvider"];
 |   { Route: 'Adonis/Src/Route' }
 |
 */
-const aliases = {};
+const aliases = {
+  Role: 'Adonis/Acl/Role',
+  Permission: 'Adonis/Acl/Permission'
+};
 
 /*
 |--------------------------------------------------------------------------

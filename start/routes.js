@@ -16,18 +16,32 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-// public
-Route.group(() => {
-  // Route.get('/tes');
-}).prefix('v1');
+Route.get('/', () => {
+  return { greeting: 'Welcome, Karate API!' };
+});
 
-// authorization
-Route.group(() => {
-  // Route.get('/tes');
-})
+// unable to do nested group
+// Do not call Route.group one inside the another.
+// Use the following technique to apply shared properties on a group.
+const { Public: AdminPublic, Private: AdminPrivate } = use('App/Routes/V1/Admin');
+Route.group(AdminPublic).prefix('v1/admin');
+Route.group(AdminPrivate)
+  .prefix('v1/admin')
+  .middleware(['auth', 'is:administrator']);
+
+const { Public: OwnerPublic, Private: OwnerPivate } = use('App/Routes/V1/Owner');
+Route.group(OwnerPublic).prefix('v1/owner');
+Route.group(OwnerPivate)
+  .prefix('v1/owner')
+  .middleware(['auth', 'is:(owner or administrator)']);
+
+const { Public: CustomerPublic, Private: CustomerPrivate } = use('App/Routes/V1/Customer');
+Route.group(CustomerPublic).prefix('v1');
+Route.group(CustomerPrivate)
   .prefix('v1')
   .middleware(['auth']);
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' };
+// 404 page not found
+Route.any('*', ({ response }) => {
+  return response.errorNotFound('Page Not Found');
 });

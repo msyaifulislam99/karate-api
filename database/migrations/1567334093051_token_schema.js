@@ -3,7 +3,7 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class TokensSchema extends Schema {
+class TokenSchema extends Schema {
   up() {
     this.create('tokens', table => {
       table
@@ -31,4 +31,4 @@ class TokensSchema extends Schema {
   }
 }
 
-module.exports = TokensSchema;
+module.exports = TokenSchema;
