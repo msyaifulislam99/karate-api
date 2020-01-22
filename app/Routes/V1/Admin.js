@@ -22,12 +22,21 @@ const Private = () => {
   Route.get('users/:id', 'V1/Admin/UserController.Show');
   Route.put('users/:id', 'V1/Admin/UserController.Update');
 
+  // Events
   Route.get('events', 'V1/Admin/EventController.Index');
   Route.post('event', 'V1/Admin/EventController.Store');
   Route.put('event/:id', 'V1/Admin/EventController.Update');
   Route.delete('event/:id', 'V1/Admin/EventController.Destroy');
   Route.post('event/:id/images', 'V1/Admin/EventController.StoreImage');
   Route.delete('event/:id/images', 'V1/Admin/EventController.DestroyImage');
+
+  // Jury
+  Route.get('judges', 'V1/Admin/JudgeController.Index');
+  Route.post('judge', 'V1/Admin/JudgeController.Store');
+  Route.put('judge/:id', 'V1/Admin/JudgeController.Update');
+  Route.delete('judge/:id', 'V1/Admin/JudgeController.Destroy');
+  Route.post('judge/:id/images', 'V1/Admin/JudgeController.StoreImage');
+  Route.delete('judge/:id/images', 'V1/Admin/JudgeController.DestroyImage');
 };
 
 const Public = () => {};
