@@ -24,6 +24,7 @@ const providers = [
   'adonis-bumblebee/providers/BumblebeeProvider',
   'adonis-acl/providers/AclProvider',
   '@adonisjs/ally/providers/AllyProvider',
+  'adonis-search/providers/QueryProvider',
 
   // custom providers
   path.join(__dirname, '..', 'providers/ValidationRulesProvider')

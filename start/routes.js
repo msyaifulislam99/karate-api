@@ -29,11 +29,11 @@ Route.group(AdminPrivate)
   .prefix('v1/admin')
   .middleware(['auth', 'is:administrator']);
 
-const { Public: OwnerPublic, Private: OwnerPivate } = use('App/Routes/V1/Owner');
-Route.group(OwnerPublic).prefix('v1/owner');
-Route.group(OwnerPivate)
-  .prefix('v1/owner')
-  .middleware(['auth', 'is:(owner or administrator)']);
+const { Public: JudgePublic, Private: JudgePivate } = use('App/Routes/V1/Judge');
+Route.group(JudgePublic).prefix('v1/judge');
+Route.group(JudgePivate)
+  .prefix('v1/judge')
+  .middleware(['auth', 'is:(judge or administrator)']);
 
 const { Public: CustomerPublic, Private: CustomerPrivate } = use('App/Routes/V1/Customer');
 Route.group(CustomerPublic).prefix('v1');

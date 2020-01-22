@@ -24,14 +24,14 @@ class UserSeeder {
     await roleAdmin.save();
 
     const roleOwner = new Role();
-    roleOwner.name = 'Owner';
-    roleOwner.slug = 'owner';
+    roleOwner.name = 'Judge';
+    roleOwner.slug = 'judge';
     roleOwner.description = 'manage administration privileges for owner store';
     await roleOwner.save();
 
     const roleCustomer = new Role();
-    roleCustomer.name = 'Customer';
-    roleCustomer.slug = 'customer';
+    roleCustomer.name = 'Contingent';
+    roleCustomer.slug = 'contingent';
     roleCustomer.description = 'user standard role';
     await roleCustomer.save();
 
