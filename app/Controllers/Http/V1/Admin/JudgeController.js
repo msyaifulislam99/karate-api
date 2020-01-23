@@ -20,6 +20,11 @@ class JudgeController {
     return transform.paginate(restaurants, JudgeTransformer);
   }
 
+  async Show({ params, transform }) {
+    const judge = await Judge.findOrFail(params.id);
+    return transform.item(judge, JudgeTransformer);
+  }
+
   async Store({ transform, request, response }) {
     const rules = {
       name: 'required|string',

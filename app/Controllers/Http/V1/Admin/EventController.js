@@ -16,8 +16,13 @@ class EventController {
     query.where(query_search.search(['name', 'class']));
     query.orderBy(order.column, order.direction);
 
-    const restaurants = await query.paginate(...request.getPage());
-    return transform.paginate(restaurants, EventTransformer);
+    const events = await query.paginate(...request.getPage());
+    return transform.paginate(events, EventTransformer);
+  }
+
+  async Show({ params, transform }) {
+    const event = await Event.findOrFail(params.id);
+    return transform.item(event, EventTransformer);
   }
 
   async Store({ transform, request, response }) {
@@ -36,9 +41,9 @@ class EventController {
 
     const payload = request.only(['name', 'class', 'description', 'location', 'date']);
 
-    const restaurant = await Event.create({ ...payload });
+    const event = await Event.create({ ...payload });
 
-    return transform.item(restaurant, EventTransformer);
+    return transform.item(event, EventTransformer);
   }
 
   async Update({ params, request, response, transform }) {
@@ -89,8 +94,8 @@ class EventController {
   }
 
   async DestroyImage({ params, response }) {
-    const restaurant = await Event.findOrFail(params.id);
-    await restaurant.removeMedias();
+    const event = await Event.findOrFail(params.id);
+    await event.removeMedias();
 
     return response.noContent();
   }

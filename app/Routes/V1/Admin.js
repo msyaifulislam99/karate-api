@@ -24,19 +24,30 @@ const Private = () => {
 
   // Events
   Route.get('events', 'V1/Admin/EventController.Index');
+  Route.get('event/:id', 'V1/Admin/EventController.Show');
   Route.post('event', 'V1/Admin/EventController.Store');
   Route.put('event/:id', 'V1/Admin/EventController.Update');
   Route.delete('event/:id', 'V1/Admin/EventController.Destroy');
   Route.post('event/:id/images', 'V1/Admin/EventController.StoreImage');
   Route.delete('event/:id/images', 'V1/Admin/EventController.DestroyImage');
 
-  // Jury
+  // Judge
   Route.get('judges', 'V1/Admin/JudgeController.Index');
+  Route.get('judge/:id', 'V1/Admin/JudgeController.Show');
   Route.post('judge', 'V1/Admin/JudgeController.Store');
   Route.put('judge/:id', 'V1/Admin/JudgeController.Update');
   Route.delete('judge/:id', 'V1/Admin/JudgeController.Destroy');
   Route.post('judge/:id/images', 'V1/Admin/JudgeController.StoreImage');
   Route.delete('judge/:id/images', 'V1/Admin/JudgeController.DestroyImage');
+
+  // Competitor
+  Route.get('event/:idEvent/competitors', 'V1/Admin/CompetitorController.Index');
+  Route.get('event/:idEvent/competitor/:id', 'V1/Admin/CompetitorController.Show');
+  Route.post('event/:idEvent/competitor', 'V1/Admin/CompetitorController.Store');
+  Route.put('event/:idEvent/competitor/:id', 'V1/Admin/CompetitorController.Update');
+  Route.delete('event/:idEvent/competitor/:id', 'V1/Admin/CompetitorController.Destroy');
+  Route.post('event/:idEvent/competitor/:id/images', 'V1/Admin/CompetitorController.StoreImage');
+  Route.delete('event/:idEvent/competitor/:id/images', 'V1/Admin/CompetitorController.DestroyImage');
 };
 
 const Public = () => {};

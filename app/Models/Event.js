@@ -23,6 +23,10 @@ class Event extends BaseModel {
   judges() {
     return this.hasMany('App/Models/EventJudge');
   }
+
+  competitors() {
+    return this.hasMany('App/Models/Competitor');
+  }
 }
 
 module.exports = Event;
