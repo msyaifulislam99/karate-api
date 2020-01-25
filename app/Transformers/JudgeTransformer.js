@@ -12,8 +12,8 @@ class JudgeTransformer extends BumblebeeTransformer {
   /**
    * This method is used to transform the data.
    */
-  transform(model) {
-    return { ...model.toJSON() };
+  async transform(model) {
+    return { ...model.toJSON(), image: await model.getImage() };
   }
 }
 
