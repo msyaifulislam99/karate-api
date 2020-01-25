@@ -29,12 +29,6 @@ class UserSeeder {
     roleOwner.description = 'manage administration privileges for owner store';
     await roleOwner.save();
 
-    const roleCustomer = new Role();
-    roleCustomer.name = 'Contingent';
-    roleCustomer.slug = 'contingent';
-    roleCustomer.description = 'user standard role';
-    await roleCustomer.save();
-
     const user = new User();
     user.name = 'Syaiful';
     user.username = 'admin';

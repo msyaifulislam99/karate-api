@@ -48,6 +48,20 @@ const Private = () => {
   Route.delete('event/:idEvent/competitor/:id', 'V1/Admin/CompetitorController.Destroy');
   Route.post('event/:idEvent/competitor/:id/images', 'V1/Admin/CompetitorController.StoreImage');
   Route.delete('event/:idEvent/competitor/:id/images', 'V1/Admin/CompetitorController.DestroyImage');
+
+  // round
+  Route.get('event/:idEvent/rounds', 'V1/Admin/RoundController.Index');
+  Route.get('event/:idEvent/round/:id', 'V1/Admin/RoundController.Show');
+  Route.post('event/:idEvent/round', 'V1/Admin/RoundController.Store');
+  Route.put('event/:idEvent/round/:id', 'V1/Admin/RoundController.Update');
+  Route.delete('event/:idEvent/round/:id', 'V1/Admin/RoundController.Destroy');
+
+  // group
+  Route.get('round/:idRound/groups', 'V1/Admin/GroupController.Index');
+  Route.get('round/:idRound/group/:id', 'V1/Admin/GroupController.Show');
+  Route.post('round/:idRound/group', 'V1/Admin/GroupController.Store');
+  Route.put('round/:idRound/group/:id', 'V1/Admin/GroupController.Update');
+  Route.delete('round/:idRound/group/:id', 'V1/Admin/GroupController.Destroy');
 };
 
 const Public = () => {};

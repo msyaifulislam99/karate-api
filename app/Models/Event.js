@@ -27,6 +27,10 @@ class Event extends BaseModel {
   competitors() {
     return this.hasMany('App/Models/Competitor');
   }
+
+  rounds() {
+    return this.hasMany('App/Models/Round');
+  }
 }
 
 module.exports = Event;
