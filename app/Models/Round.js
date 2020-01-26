@@ -7,6 +7,10 @@ class Round extends BaseModel {
   event() {
     return this.belongsTo('App/Models/Event');
   }
+
+  groups() {
+    return this.hasMany('App/Models/Group');
+  }
 }
 
 module.exports = Round;

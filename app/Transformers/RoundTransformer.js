@@ -10,7 +10,7 @@ const BumblebeeTransformer = use('Bumblebee/Transformer');
  */
 class RoundTransformer extends BumblebeeTransformer {
   static get availableInclude() {
-    return ['event'];
+    return ['event', 'groups'];
   }
 
   /**
@@ -26,6 +26,12 @@ class RoundTransformer extends BumblebeeTransformer {
       return this.null();
     }
     return this.item(event, 'EventTransformer');
+  }
+
+  async includeGroups(model) {
+    const groups = await model.getRelated('groups');
+
+    return this.collection(groups, 'GroupTransformer');
   }
 }
 
