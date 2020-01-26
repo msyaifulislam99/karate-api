@@ -62,6 +62,9 @@ const Private = () => {
   Route.post('round/:idRound/group', 'V1/Admin/GroupController.Store');
   Route.put('round/:idRound/group/:id', 'V1/Admin/GroupController.Update');
   Route.delete('round/:idRound/group/:id', 'V1/Admin/GroupController.Destroy');
+
+  // match
+  Route.post('group/:idGroup/matches', 'V1/Admin/MatchController.Store');
 };
 
 const Public = () => {};

@@ -18,6 +18,10 @@ class Competitor extends BaseModel {
   event() {
     return this.belongsTo('App/Models/Event');
   }
+
+  match() {
+    return this.belongsTo('App/Models/Match');
+  }
 }
 
 module.exports = Competitor;
