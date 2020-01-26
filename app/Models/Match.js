@@ -1,15 +1,19 @@
 'use strict';
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model');
+const BaseModel = use('App/Models/BaseModel');
 
-class Match extends Model {
+class Match extends BaseModel {
   round() {
     return this.belongsTo('App/Models/Round');
   }
 
   competitor() {
     return this.belongsTo('App/Models/Competitor');
+  }
+
+  scores() {
+    return this.hasMany('App/Models/Score');
   }
 }
 

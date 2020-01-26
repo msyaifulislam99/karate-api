@@ -10,7 +10,7 @@ const BumblebeeTransformer = use('Bumblebee/Transformer');
  */
 class MatchTransformer extends BumblebeeTransformer {
   static get availableInclude() {
-    return ['competitor'];
+    return ['competitor', 'scores'];
   }
 
   /**
@@ -26,6 +26,12 @@ class MatchTransformer extends BumblebeeTransformer {
       return this.null();
     }
     return this.item(competitor, 'CompetitorTransformer');
+  }
+
+  async includeScores(model) {
+    const scores = await model.getRelated('scores');
+
+    return this.collection(scores, 'ScoreTransformer');
   }
 }
 

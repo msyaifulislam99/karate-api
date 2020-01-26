@@ -67,6 +67,9 @@ const Private = () => {
   Route.post('group/:idGroup/matches', 'V1/Admin/MatchController.Store');
 };
 
-const Public = () => {};
+const Public = () => {
+  // match
+  Route.post('score', 'V1/Admin/ScoreController.Store');
+};
 
 module.exports = { Private, Public };

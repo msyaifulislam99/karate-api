@@ -14,8 +14,8 @@ class Judge extends BaseModel {
     return media ? media.getUrl() : null;
   }
 
-  events() {
-    return this.hasMany('App/Models/EventJudge');
+  scores() {
+    return this.hasMany('App/Models/Score');
   }
 }
 

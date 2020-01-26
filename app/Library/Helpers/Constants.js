@@ -8,5 +8,9 @@ module.exports = {
     STATUS_ACTIVE: 'active',
     STATUS_DONE: 'done',
     STATUS_REMATCH: 'rematch'
+  },
+  SCORE: {
+    STATUS_COUNT: 'counted',
+    STATUS_UNCOUNT: 'uncounted'
   }
 };
