@@ -3,21 +3,16 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class CompetitorSchema extends Schema {
+class RoundSchema extends Schema {
   up() {
-    this.create('competitors', table => {
+    this.create('rounds', table => {
       table
         .uuid('id')
         .primary()
         .defaultTo(this.db.raw('uuid_generate_v4()'));
       table.uuid('event_id');
-      table.string('name', 100).notNullable();
-      table.string('gender', 10);
-      table.decimal('weight', 10, 2);
-      table.string('contingen');
-      table.string('type');
-      table.date('birthday');
-      table.string('country');
+      table.string('title', 100).notNullable();
+      table.string('status', 50).notNullable();
       table.timestamps();
 
       table
@@ -29,8 +24,8 @@ class CompetitorSchema extends Schema {
   }
 
   down() {
-    this.drop('competitors');
+    this.drop('rounds');
   }
 }
 
-module.exports = CompetitorSchema;
+module.exports = RoundSchema;

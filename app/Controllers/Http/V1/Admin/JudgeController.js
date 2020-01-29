@@ -3,35 +3,32 @@
 const { validateAll } = use('Validator');
 const messages = use('App/Library/Validator/Messages');
 const Query = use('Query');
-const Event = use('App/Models/Event');
-const EventTransformer = use('App/Transformers/EventTransformer');
+const Judge = use('App/Models/Judge');
+const JudgeTransformer = use('App/Transformers/JudgeTransformer');
 const MediaTransformer = use('App/Transformers/MediaTransformer');
 
-class EventController {
+class JudgeController {
   async Index({ transform, request }) {
     const query_search = new Query(request, { order: 'name' });
     const order = query_search.order();
-    const query = Event.query();
+    const query = Judge.query();
 
-    query.where(query_search.search(['name', 'class']));
+    query.where(query_search.search(['name']));
     query.orderBy(order.column, order.direction);
 
-    const events = await query.paginate(...request.getPage());
-    return transform.paginate(events, EventTransformer);
+    const restaurants = await query.paginate(...request.getPage());
+    return transform.paginate(restaurants, JudgeTransformer);
   }
 
   async Show({ params, transform }) {
-    const event = await Event.findOrFail(params.id);
-    return transform.item(event, EventTransformer);
+    const judge = await Judge.findOrFail(params.id);
+    return transform.item(judge, JudgeTransformer);
   }
 
   async Store({ transform, request, response }) {
     const rules = {
       name: 'required|string',
-      class: 'required|string',
-      description: 'string',
-      location: 'string',
-      date: 'date'
+      birthday: 'date'
     };
 
     const validation = await validateAll(request.all(), rules, messages);
@@ -39,44 +36,41 @@ class EventController {
       return response.errorInvalid(validation);
     }
 
-    const payload = request.only(['name', 'class', 'description', 'location', 'date']);
+    const payload = request.only(['name', 'gender', 'birthday', 'country']);
 
-    const event = await Event.create({ ...payload });
+    const restaurant = await Judge.create({ ...payload });
 
-    return transform.item(event, EventTransformer);
+    return transform.item(restaurant, JudgeTransformer);
   }
 
   async Update({ params, request, response, transform }) {
     const rules = {
       name: 'required|string',
-      class: 'required|string',
-      description: 'string',
-      location: 'string',
-      date: 'date'
+      birthday: 'date'
     };
     const validation = await validateAll(request.all(), rules, messages);
     if (validation.fails()) {
       return response.errorInvalid(validation);
     }
 
-    const payload = request.only(['name', 'class', 'description', 'location', 'date']);
+    const payload = request.only(['name', 'gender', 'birthday', 'country']);
 
-    const event = await Event.findOrFail(params.id);
-    event.merge(payload);
-    await event.save();
+    const judge = await Judge.findOrFail(params.id);
+    judge.merge(payload);
+    await judge.save();
 
-    return transform.item(event, EventTransformer);
+    return transform.item(judge, JudgeTransformer);
   }
 
   async Destroy({ response, params }) {
-    const event = await Event.findOrFail(params.id);
-    await event.delete();
+    const judge = await Judge.findOrFail(params.id);
+    await judge.delete();
 
     return response.noContent();
   }
 
   async StoreImage({ params, request, response, transform }) {
-    const event = await Event.findOrFail(params.id);
+    const judge = await Judge.findOrFail(params.id);
 
     try {
       const image = request.file('image', {
@@ -84,9 +78,9 @@ class EventController {
         size: '2mb',
         extnames: ['png', 'jpg', 'jpeg']
       });
-      // one event one image
-      await event.removeMedias();
-      const media = await event.saveMedia(image);
+      // one judge one image
+      await judge.removeMedias();
+      const media = await judge.saveMedia(image);
       return transform.item(media, MediaTransformer);
     } catch (error) {
       return response.errorBadRequest(error.message);
@@ -94,11 +88,11 @@ class EventController {
   }
 
   async DestroyImage({ params, response }) {
-    const event = await Event.findOrFail(params.id);
-    await event.removeMedias();
+    const restaurant = await Judge.findOrFail(params.id);
+    await restaurant.removeMedias();
 
     return response.noContent();
   }
 }
 
-module.exports = EventController;
+module.exports = JudgeController;

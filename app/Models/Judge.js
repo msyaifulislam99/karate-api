@@ -5,10 +5,17 @@ const BaseModel = use('App/Models/BaseModel');
 class Judge extends BaseModel {
   static boot() {
     super.boot();
+
+    this.addTrait('Media');
   }
 
-  events() {
-    return this.hasMany('App/Models/EventJudge');
+  async getImage() {
+    const media = await this.getMedia();
+    return media ? media.getUrl() : null;
+  }
+
+  scores() {
+    return this.hasMany('App/Models/Score');
   }
 }
 

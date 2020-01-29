@@ -11,7 +11,7 @@ class JudgeSchema extends Schema {
         .primary()
         .defaultTo(this.db.raw('uuid_generate_v4()'));
       table.string('name', 100).notNullable();
-      table.string('gender', 10).notNullable();
+      table.string('gender', 10);
       table.date('birthday');
       table.string('country');
       table.timestamps();

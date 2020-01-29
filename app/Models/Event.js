@@ -20,8 +20,12 @@ class Event extends BaseModel {
     return media ? media.getUrl() : null;
   }
 
-  judges() {
-    return this.hasMany('App/Models/EventJudge');
+  competitors() {
+    return this.hasMany('App/Models/Competitor');
+  }
+
+  rounds() {
+    return this.hasMany('App/Models/Round');
   }
 }
 
