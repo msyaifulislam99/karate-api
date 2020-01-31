@@ -4,8 +4,8 @@
 const BaseModel = use('App/Models/BaseModel');
 
 class Match extends BaseModel {
-  round() {
-    return this.belongsTo('App/Models/Round');
+  group() {
+    return this.belongsTo('App/Models/Group');
   }
 
   competitor() {

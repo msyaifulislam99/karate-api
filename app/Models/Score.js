@@ -8,7 +8,7 @@ class Score extends BaseModel {
   }
 
   judge() {
-    return this.belongsTo('App/Models/Judge');
+    return this.belongsTo('App/Models/User');
   }
 }
 

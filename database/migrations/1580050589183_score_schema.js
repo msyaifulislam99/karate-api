@@ -25,7 +25,7 @@ class ScoreSchema extends Schema {
       table
         .foreign('judge_id')
         .references('id')
-        .on('judges')
+        .on('users')
         .onDelete('cascade');
     });
   }

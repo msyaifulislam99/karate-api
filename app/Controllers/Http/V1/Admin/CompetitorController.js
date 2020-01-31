@@ -8,6 +8,7 @@ const Event = use('App/Models/Event');
 const CompetitorTransformer = use('App/Transformers/CompetitorTransformer');
 const MediaTransformer = use('App/Transformers/MediaTransformer');
 const RequestException = use('App/Exceptions/RequestException');
+const Constants = use('App/Library/Helpers/Constants');
 
 class CompetitorController {
   async Index({ transform, request, params }) {
@@ -41,7 +42,7 @@ class CompetitorController {
     const payload = request.only(['name', 'gender', 'birthday', 'country', 'weight', 'type', 'contingen']);
 
     const event = await this.getEvent(params.idEvent);
-    const competitor = await Competitor.create({ ...payload });
+    const competitor = await Competitor.create({ ...payload, status: Constants.COMPETITOR.STATUS_ACTIVE });
     await competitor.event().associate(event);
 
     return transform.item(competitor, CompetitorTransformer);
@@ -49,14 +50,15 @@ class CompetitorController {
 
   async Update({ params, request, response, transform }) {
     const rules = {
-      name: 'required|string'
+      name: 'required|string',
+      status: 'required|in:active,eliminated'
     };
     const validation = await validateAll(request.all(), rules, messages);
     if (validation.fails()) {
       return response.errorInvalid(validation);
     }
 
-    const payload = request.only(['name', 'gender', 'birthday', 'country', 'weight', 'type', 'contingen']);
+    const payload = request.only(['name', 'gender', 'birthday', 'country', 'weight', 'type', 'contingen', 'status']);
 
     const competitor = await this.getCompetitor(params);
     competitor.merge(payload);

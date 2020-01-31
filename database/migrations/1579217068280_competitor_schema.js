@@ -18,6 +18,7 @@ class CompetitorSchema extends Schema {
       table.string('type');
       table.date('birthday');
       table.string('country');
+      table.string('status');
       table.timestamps();
 
       table

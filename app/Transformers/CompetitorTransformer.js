@@ -10,7 +10,7 @@ const BumblebeeTransformer = use('Bumblebee/Transformer');
  */
 class CompetitorTransformer extends BumblebeeTransformer {
   static get availableInclude() {
-    return ['event'];
+    return ['event', 'match'];
   }
 
   /**
@@ -26,6 +26,14 @@ class CompetitorTransformer extends BumblebeeTransformer {
       return this.null();
     }
     return this.item(event, 'EventTransformer');
+  }
+
+  includeMatch(model) {
+    const event = model.getRelated('match');
+    if (!event) {
+      return this.null();
+    }
+    return this.item(event, 'MatchTransformer');
   }
 }
 

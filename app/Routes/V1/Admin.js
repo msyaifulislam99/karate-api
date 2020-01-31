@@ -69,7 +69,7 @@ const Private = () => {
 
 const Public = () => {
   // match
-  Route.post('score', 'V1/Admin/ScoreController.Store');
+  // Route.post('score', 'V1/Admin/ScoreController.Store');
 };
 
 module.exports = { Private, Public };

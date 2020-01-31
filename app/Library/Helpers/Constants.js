@@ -12,5 +12,13 @@ module.exports = {
   SCORE: {
     STATUS_COUNT: 'counted',
     STATUS_UNCOUNT: 'uncounted'
+  },
+  MATCH: {
+    STATUS_ACTIVE: 'ready',
+    STATUS_DONE: 'done'
+  },
+  COMPETITOR: {
+    STATUS_ACTIVE: 'active',
+    STATUS_DONE: 'eliminated'
   }
 };

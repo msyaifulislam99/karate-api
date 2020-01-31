@@ -9,6 +9,15 @@ const Private = () => {
   Route.put('me/password', 'V1/Judge/UserController.ChangePassword');
   Route.post('me/images', 'V1/Judge/UserController.StoreImage');
   Route.delete('me/images', 'V1/Judge/UserController.DestroyImage');
+
+  // event
+  Route.get('events', 'V1/Judge/EventController.Index');
+
+  // list match/competitor
+  Route.get('event/:idEvent/matches', 'V1/Judge/MatchController.Index');
+
+  // scoring
+  Route.post('score', 'V1/Judge/ScoreController.Store');
 };
 
 const Public = () => {

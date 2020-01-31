@@ -12,7 +12,7 @@ class UserSchema extends Schema {
         .defaultTo(this.db.raw('uuid_generate_v4()'));
       table.string('username', 100).unique();
       table.string('password');
-      table.string('phone', 20).unique();
+      table.string('phone', 20);
       table.string('email', 100).notNullable();
       table.string('name', 100).notNullable();
       table.string('gender', 10).notNullable();

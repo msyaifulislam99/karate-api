@@ -10,6 +10,8 @@ class MatchSchema extends Schema {
         .uuid('id')
         .primary()
         .defaultTo(this.db.raw('uuid_generate_v4()'));
+      table.float('score');
+      table.string('status', 50);
       table.uuid('group_id');
       table.uuid('competitor_id');
       table.timestamps();

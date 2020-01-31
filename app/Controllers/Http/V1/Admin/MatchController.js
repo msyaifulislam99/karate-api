@@ -3,6 +3,7 @@
 const { validateAll } = use('Validator');
 const messages = use('App/Library/Validator/Messages');
 const Group = use('App/Models/Group');
+const Constants = use('App/Library/Helpers/Constants');
 
 class MatchController {
   async Store({ transform, request, response, params }) {
@@ -21,7 +22,7 @@ class MatchController {
     const data = [];
     // insert many
     for (const category of request.input('id_competitors') || []) {
-      data.push({ group_id: params.idGroup, competitor_id: category });
+      data.push({ group_id: params.idGroup, competitor_id: category, status: Constants.MATCH.STATUS_ACTIVE });
     }
 
     await group.matches().createMany(data);
