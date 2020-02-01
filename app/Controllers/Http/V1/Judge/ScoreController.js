@@ -21,7 +21,12 @@ class ScoreController {
     const judge = await auth.getUser();
 
     const payload = request.only(['match_id', 'tech', 'ath']);
-    const score = await Score.create({ ...payload, judge_id: judge.id, status: Constants.SCORE.STATUS_COUNT });
+    const score = await Score.create({
+      ...payload,
+      judge_id: judge.id,
+      status_ath: Constants.SCORE.STATUS_COUNT,
+      status_tech: Constants.SCORE.STATUS_COUNT
+    });
 
     return transform.item(score, 'ScoreTransformer');
   }

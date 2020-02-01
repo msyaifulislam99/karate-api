@@ -14,7 +14,8 @@ class ScoreSchema extends Schema {
       table.uuid('judge_id');
       table.float('tech').notNullable();
       table.float('ath').notNullable();
-      table.string('status', 50);
+      table.string('status_tech', 50);
+      table.string('status_ath', 50);
       table.timestamps();
 
       table

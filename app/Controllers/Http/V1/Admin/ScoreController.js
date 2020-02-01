@@ -24,6 +24,28 @@ class ScoreController {
 
     return transform.item(score, 'ScoreTransformer');
   }
+
+  async Update({ transform, request, response, params }) {
+    const rules = {
+      status_ath: 'required|in:counted,uncounted',
+      status_tech: 'required|in:counted,uncounted',
+      tech: 'required|number',
+      ath: 'required|number'
+    };
+
+    const validation = await validateAll(request.all(), rules, messages);
+    if (validation.fails()) {
+      return response.errorInvalid(validation);
+    }
+
+    const score = await Score.findOrFail(params.id);
+
+    const payload = request.only(['status_ath', 'status_tech', 'tech', 'ath']);
+    score.merge(payload);
+    await score.save();
+
+    return transform.item(score, 'ScoreTransformer');
+  }
 }
 
 module.exports = ScoreController;

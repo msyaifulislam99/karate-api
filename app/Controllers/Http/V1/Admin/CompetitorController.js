@@ -24,6 +24,19 @@ class CompetitorController {
     return transform.paginate(competitors, CompetitorTransformer);
   }
 
+  async IndexGroup({ transform, request, params }) {
+    const query_search = new Query(request, { order: 'name' });
+    const order = query_search.order();
+    const event = await this.getEvent(params.idEvent);
+    const competitors = await event
+      .competitors()
+      .where(query_search.search(['name']))
+      .orderBy(order.column, order.direction)
+      .paginate(...request.getPage());
+
+    return transform.paginate(competitors, CompetitorTransformer);
+  }
+
   async Show({ params, transform }) {
     const competitor = await this.getCompetitor(params);
     return transform.item(competitor, CompetitorTransformer);

@@ -65,6 +65,9 @@ const Private = () => {
 
   // match
   Route.post('group/:idGroup/matches', 'V1/Admin/MatchController.Store');
+
+  // score
+  Route.put('score/:id', 'V1/Admin/ScoreController.Update');
 };
 
 const Public = () => {
