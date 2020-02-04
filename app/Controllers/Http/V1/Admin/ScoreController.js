@@ -3,15 +3,15 @@
 const { validateAll } = use('Validator');
 const messages = use('App/Library/Validator/Messages');
 const Score = use('App/Models/Score');
+const Event = use('App/Models/Event');
+const Match = use('App/Models/Match');
 const Constants = use('App/Library/Helpers/Constants');
+const ScoreTemporary = use('App/Models/ScoreTemporary');
 
 class ScoreController {
-  async Store({ transform, request, response }) {
+  async Index({ transform, request, response, params }) {
     const rules = {
-      match_id: 'required|uuid',
-      judge_id: 'required|uuid',
-      tech: 'required|number',
-      ath: 'required|number'
+      status: 'required|in:all,draft,deleted,moved'
     };
 
     const validation = await validateAll(request.all(), rules, messages);
@@ -19,10 +19,57 @@ class ScoreController {
       return response.errorInvalid(validation);
     }
 
-    const payload = request.only(['match_id', 'judge_id', 'tech', 'ath']);
-    const score = await Score.create({ ...payload, status: Constants.SCORE.STATUS_COUNT });
+    const event = await Event.findOrFail(params.id);
 
-    return transform.item(score, 'ScoreTransformer');
+    const query = event.scores();
+
+    if (request.input('status') !== 'all') {
+      query.where('status', '=', request.input('status'));
+    }
+
+    const scores = await query.fetch();
+
+    return transform.collection(scores, 'ScoreTransformer');
+  }
+
+  async StoreTemp({ transform, request, response, params }) {
+    const rules = {
+      competitor_id: 'required|uuid',
+      information: 'required'
+    };
+
+    const validation = await validateAll(request.all(), rules, messages);
+    if (validation.fails()) {
+      return response.errorInvalid(validation);
+    }
+
+    const payload = request.only(['competitor_id', 'information', 'score']);
+
+    const match = await Match.create({
+      ...payload,
+      status: Constants.MATCH.STATUS_ACTIVE,
+      event_id: params.idEvent
+    });
+
+    const data = [];
+    // insert many
+    for (const score of request.input('scores') || []) {
+      data.push({
+        match_id: match.id,
+        judge_id: score.judge_id,
+        tech: score.tech,
+        ath: score.ath,
+        status_tech: score.status_tech,
+        status_ath: score.status_ath
+      });
+    }
+    await match.scores().createMany(data);
+
+    await ScoreTemporary.query()
+      .where('status', '=', 'draft')
+      .update({ status: 'moved' });
+
+    return transform.item(match, 'MatchTransformer');
   }
 
   async Update({ transform, request, response, params }) {

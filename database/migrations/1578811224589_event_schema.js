@@ -16,6 +16,7 @@ class EventSchema extends Schema {
       table.text('description');
       table.date('date');
       table.string('location', 100);
+      table.string('status', 20);
       table.timestamps();
     });
   }

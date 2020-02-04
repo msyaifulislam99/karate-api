@@ -8,6 +8,10 @@ class Match extends BaseModel {
     return this.belongsTo('App/Models/Group');
   }
 
+  event() {
+    return this.belongsTo('App/Models/Event');
+  }
+
   competitor() {
     return this.belongsTo('App/Models/Competitor');
   }

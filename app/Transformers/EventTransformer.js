@@ -10,7 +10,7 @@ const BumblebeeTransformer = use('Bumblebee/Transformer');
  */
 class EventTransformer extends BumblebeeTransformer {
   static get availableInclude() {
-    return ['competitors', 'rounds'];
+    return ['competitors', 'rounds', 'matches'];
   }
 
   /**
@@ -24,6 +24,12 @@ class EventTransformer extends BumblebeeTransformer {
     const competitors = await model.getRelated('competitors');
 
     return this.collection(competitors, 'CompetitorTransformer');
+  }
+
+  async includeMatches(model) {
+    const matches = await model.getRelated('matches');
+
+    return this.collection(matches, 'MatchTransformer');
   }
 
   async includeRounds(model) {

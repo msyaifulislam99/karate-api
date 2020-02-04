@@ -68,6 +68,14 @@ const Private = () => {
 
   // score
   Route.put('score/:id', 'V1/Admin/ScoreController.Update');
+
+  // score temp
+  Route.get('event/:id/score_temp', 'V1/Admin/ScoreController.Index');
+  Route.post('event/:idEvent/score_temp', 'V1/Admin/ScoreController.StoreTemp');
+
+  // matche temp
+  Route.get('event/:idEvent/match', 'V1/Admin/MatchController.Index');
+  Route.get('event/:idEvent/match/:id', 'V1/Admin/MatchController.Show');
 };
 
 const Public = () => {

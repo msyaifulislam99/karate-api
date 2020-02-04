@@ -10,7 +10,7 @@ class EventController {
     const order = query_search.order();
     const query = Event.query();
 
-    query.where(query_search.search(['name', 'class']));
+    query.where('status', '=', 'active');
     query.orderBy(order.column, order.direction);
 
     const events = await query.paginate(...request.getPage());

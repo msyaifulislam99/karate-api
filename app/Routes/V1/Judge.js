@@ -18,6 +18,7 @@ const Private = () => {
 
   // scoring
   Route.post('score', 'V1/Judge/ScoreController.Store');
+  Route.post('score_temp', 'V1/Judge/ScoreController.StoreTemp');
 };
 
 const Public = () => {

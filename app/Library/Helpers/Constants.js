@@ -13,6 +13,11 @@ module.exports = {
     STATUS_COUNT: 'counted',
     STATUS_UNCOUNT: 'uncounted'
   },
+  SCORE_TEMP: {
+    STATUS_DRAFT: 'draft',
+    STATUS_DELETE: 'deleted',
+    STATUS_MOVE: 'moved'
+  },
   MATCH: {
     STATUS_ACTIVE: 'ready',
     STATUS_DONE: 'done'
