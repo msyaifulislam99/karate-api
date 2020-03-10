@@ -17,7 +17,7 @@ const Private = () => {
   Route.get('event/:idEvent/matches', 'V1/Judge/MatchController.Index');
 
   // scoring
-  Route.post('score', 'V1/Judge/ScoreController.Store');
+  Route.post('stage/:idStage/score', 'V1/Judge/ScoreController.Store');
 };
 
 const Public = () => {

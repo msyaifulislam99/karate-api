@@ -66,8 +66,17 @@ const Private = () => {
   // match
   Route.post('group/:idGroup/matches', 'V1/Admin/MatchController.Store');
 
+  // Events
+  Route.get('stages', 'V1/Admin/StageController.Index');
+  Route.get('stage/:id', 'V1/Admin/StageController.Show');
+  Route.post('stage', 'V1/Admin/StageController.Store');
+  Route.put('stage/:id', 'V1/Admin/StageController.Update');
+  Route.delete('stage/:id', 'V1/Admin/StageController.Destroy');
+
   // score
   Route.put('score/:id', 'V1/Admin/ScoreController.Update');
+  Route.post('stage/:idStage/calculate', 'V1/Admin/ScoreController.IndexCalculate');
+  Route.get('stage/:idStage/reset', 'V1/Admin/ScoreController.IndexReset');
 };
 
 const Public = () => {

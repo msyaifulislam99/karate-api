@@ -10,18 +10,19 @@ class ScoreSchema extends Schema {
         .uuid('id')
         .primary()
         .defaultTo(this.db.raw('uuid_generate_v4()'));
-      table.uuid('match_id');
+      table.uuid('stage_id');
       table.uuid('judge_id');
       table.float('tech').notNullable();
       table.float('ath').notNullable();
       table.string('status_tech', 50);
       table.string('status_ath', 50);
+      table.string('status', 50);
       table.timestamps();
 
       table
-        .foreign('match_id')
+        .foreign('stage_id')
         .references('id')
-        .on('matches')
+        .on('stages')
         .onDelete('cascade');
       table
         .foreign('judge_id')

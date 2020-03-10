@@ -6,9 +6,8 @@ const Score = use('App/Models/Score');
 const Constants = use('App/Library/Helpers/Constants');
 
 class ScoreController {
-  async Store({ transform, request, response, auth }) {
+  async Store({ transform, request, response, auth, params }) {
     const rules = {
-      match_id: 'required|uuid',
       tech: 'required|number',
       ath: 'required|number'
     };
@@ -20,12 +19,14 @@ class ScoreController {
 
     const judge = await auth.getUser();
 
-    const payload = request.only(['match_id', 'tech', 'ath']);
+    const payload = request.only(['tech', 'ath']);
     const score = await Score.create({
       ...payload,
       judge_id: judge.id,
+      stage_id: params.idStage,
       status_ath: Constants.SCORE.STATUS_COUNT,
-      status_tech: Constants.SCORE.STATUS_COUNT
+      status_tech: Constants.SCORE.STATUS_COUNT,
+      status: Constants.SCORE.STATUS_ACTIVE
     });
 
     return transform.item(score, 'ScoreTransformer');
