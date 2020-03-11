@@ -14,6 +14,8 @@ class StageSchema extends Schema {
       table.float('score');
       table.string('athlete', 100);
       table.string('contingen', 100);
+      table.string('class', 100);
+      table.string('genre', 100);
       table.timestamps();
     });
   }

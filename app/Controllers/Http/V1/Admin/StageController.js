@@ -28,7 +28,9 @@ class StageController {
     const rules = {
       name: 'required|string',
       athlete: 'string',
-      contingen: 'string'
+      contingen: 'string',
+      class: 'string',
+      genre: 'string'
     };
 
     const validation = await validateAll(request.all(), rules, messages);
@@ -36,7 +38,7 @@ class StageController {
       return response.errorInvalid(validation);
     }
 
-    const payload = request.only(['name', 'athlete', 'contingen']);
+    const payload = request.only(['name', 'athlete', 'contingen', 'class', 'genre']);
 
     const stage = await Stage.create({ ...payload });
 
@@ -47,7 +49,9 @@ class StageController {
     const rules = {
       name: 'required|string',
       athlete: 'string',
-      contingen: 'string'
+      contingen: 'string',
+      class: 'string',
+      genre: 'string'
     };
 
     const validation = await validateAll(request.all(), rules, messages);
@@ -55,7 +59,7 @@ class StageController {
       return response.errorInvalid(validation);
     }
 
-    const payload = request.only(['name', 'athlete', 'contingen']);
+    const payload = request.only(['name', 'athlete', 'contingen', 'class', 'genre']);
 
     const stage = await Stage.findOrFail(params.id);
     stage.merge(payload);
