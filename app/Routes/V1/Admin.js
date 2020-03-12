@@ -77,6 +77,8 @@ const Private = () => {
   Route.put('score/:id', 'V1/Admin/ScoreController.Update');
   Route.post('stage/:idStage/calculate', 'V1/Admin/ScoreController.IndexCalculate');
   Route.get('stage/:idStage/reset', 'V1/Admin/ScoreController.IndexReset');
+  Route.get('stage/:idStage/scores', 'V1/Admin/ScoreController.Index');
+  Route.delete('score/:id', 'V1/Admin/ScoreController.Destroy');
 };
 
 const Public = () => {

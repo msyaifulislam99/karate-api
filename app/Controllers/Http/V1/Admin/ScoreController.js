@@ -26,9 +26,19 @@ class ScoreController {
     return transform.item(stage, 'StageTransformer');
   }
 
+  async Index({ params, transform }) {
+    const stage = await Stage.findOrFail(params.idStage);
+    const scores = await stage
+      .scores()
+      .where('status', '=', Constants.SCORE.STATUS_ACTIVE)
+      .fetch();
+
+    return transform.collection(scores, 'ScoreTransformer');
+  }
+
   async IndexCalculate({ params, transform, response, request }) {
     const rules = {
-      judge_count: 'required|number'
+      judge_count: 'required|number|in:5,7'
     };
 
     const validation = await validateAll(request.all(), rules, messages);
@@ -99,6 +109,13 @@ class ScoreController {
     await score.save();
 
     return transform.item(score, 'ScoreTransformer');
+  }
+
+  async Destroy({ response, params }) {
+    const score = await Score.findOrFail(params.id);
+    await score.delete();
+
+    return response.noContent();
   }
 }
 
