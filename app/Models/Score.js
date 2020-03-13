@@ -9,6 +9,7 @@ class Score extends BaseModel {
       return 0;
     }
     let iterate = 0;
+    let score = 0;
     if (judge_count === 5) {
       iterate = 1;
     }
@@ -16,28 +17,37 @@ class Score extends BaseModel {
       iterate = 2;
     }
 
+    const array_uncounted = [];
+
     // calculation process
     for (let index = 0; index < iterate; index += 1) {
       const max_score = _.maxBy(data, type);
       const index_max = _.findIndex(data, max_score);
+
+      array_uncounted.push(max_score.id);
       data.splice(index_max, 1);
     }
 
     for (let index = 0; index < iterate; index += 1) {
       const min_score = _.minBy(data, type);
       const index_min = _.findIndex(data, min_score);
+
+      array_uncounted.push(min_score.id);
       data.splice(index_min, 1);
     }
 
     const sum = _.sumBy(data, type);
 
     if (type === 'tech') {
-      return sum * 0.7;
+      score = sum * 0.7;
     }
     if (type === 'ath') {
-      return sum * 0.3;
+      score = sum * 0.3;
     }
-    return 0;
+    return {
+      score,
+      array_uncounted
+    };
   }
 
   match() {

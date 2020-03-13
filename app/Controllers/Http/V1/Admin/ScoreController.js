@@ -47,21 +47,32 @@ class ScoreController {
     }
 
     const stage = await Stage.findOrFail(params.idStage);
+    let json;
     const scores = await stage
       .scores()
       .where('status', '=', Constants.SCORE.STATUS_ACTIVE)
       .fetch();
 
-    const json = scores.toJSON();
+    json = scores.toJSON();
     const judge_count = parseInt(request.input('judge_count'), 10);
 
     if (judge_count !== json.length) {
       throw new RequestException('Judge Count not Match', 400);
     }
 
-    const sum_tech = Score.calculate(json, 'tech', request.input('judge_count'));
-    const sum_ath = Score.calculate(json, 'ath', request.input('judge_count'));
-    const sum = sum_tech + sum_ath;
+    const sum_tech = Score.calculate(json, 'tech', judge_count);
+    await Score.query()
+      .whereIn('id', sum_tech.array_uncounted)
+      .update({ status_tech: Constants.SCORE.STATUS_UNCOUNT });
+
+    // re-set json cause previous json already filtered
+    json = scores.toJSON();
+    const sum_ath = Score.calculate(json, 'ath', judge_count);
+    await Score.query()
+      .whereIn('id', sum_ath.array_uncounted)
+      .update({ status_ath: Constants.SCORE.STATUS_UNCOUNT });
+
+    const sum = sum_tech.score + sum_ath.score;
 
     const data = { score: sum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) };
     stage.merge(data);
